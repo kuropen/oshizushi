@@ -1,0 +1,6 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "oshizushi",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-03-11"
+}
