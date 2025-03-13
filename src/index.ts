@@ -4,9 +4,33 @@
 // https://www.boost.org/LICENSE_1_0.txt)
 
 import { Hono } from 'hono'
+
+// NOTE: Specific to Cloudflare Workers
+import { getConnInfo } from 'hono/cloudflare-workers'
+
+import { ipRestriction } from 'hono/ip-restriction'
 import { Bindings, PushoverPayload, PushoverResponse, WebhookPayload } from './types'
 
 const app = new Hono<{Bindings: Bindings}>()
+
+app.use(
+  '/webhook',
+  ipRestriction(getConnInfo, {
+    // should allow only Mackerel's IP addresses which is mentioned in the document:
+    // https://support.mackerel.io/hc/en-us/articles/360039701332-What-is-the-source-IP-address-for-Webhook-and-other-services-alert-notifications-from-Mackerel
+    allowList: [
+      '52.193.111.118',
+      '52.196.125.133',
+      '13.113.213.40',
+      '52.197.186.229',
+      '52.198.79.40',
+      '13.114.12.29',
+      '13.113.240.89',
+      '52.68.245.9',
+      '13.112.142.176'
+    ],
+  })
+)
 
 app.get('/', (c) => {
   return c.text('This is Oshizushi, an API linking Mackerel and Pushover.')

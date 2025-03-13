@@ -7,6 +7,8 @@ The author uses this application on [Cloudflare Workers](https://workers.cloudfl
 As the application is built with [Hono](https://hono.dev), other TypeScript runtime environments may be usable,
 but not guaranteed.
 
+(Note that this application now enforces IP address restriction. Since the method to check IP address is runtime-specific, you should rewrite related code to run on another environment.)
+
 ## How to Use
 1. Register your Pushover application
 2. Prepare these secrets and register them as environment variables (secrets on Workers):
